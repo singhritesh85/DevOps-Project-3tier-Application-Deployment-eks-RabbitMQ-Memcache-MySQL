@@ -115,12 +115,27 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.pas
 
 Now login into ArgoCD using the username admin and password as obtained above. After Login into ArgoCD change the password.
 
+Finally Install ArgoCD cli on your Jenkins Slave.
 ```
 <br><br/>
 Create the Jenkins Job using the Jenkinsfile as provided in this Repository and update the file **application.properties** present at the path Three-tier-WebApplication/src/main/resources as shown in the screenshot below.
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/4d97eae9-fe92-42aa-a568-b7f99dc0fc3a)
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/a7f17aa3-8d10-474c-9530-d3f6b70e1e11)
 
-
+Now Run the Jenkins Job after providing the parameters. Create the URL using ingress rule for service present in the file ingress-rule.yaml in this repository. Do the entry for this URL with DNS Name in Record Set of Route53. Access the newly created URL and provide username **admin_vp** and password **admin_vp**.   
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/247e8919-1266-4d7e-90fc-0947efb94e0b)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/553d72db-536d-4ad2-9594-36705cae1de4)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/0eb48ba5-26ad-4bbb-872f-2cce654b7d20)
+When you click on the User for the first time it will get the values from MySQL Database and store it in Memcache, so that next time when you click on the same user it will provide the values from the Memcache itself.
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/1ebf7501-0fe9-468d-b94e-64c69c15114d)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/067bd76c-9ce6-4af2-b72f-fbef5a1291b4)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/e14f5c2c-f5f7-4fd7-8fa9-29d64d176a01)
+<br><br/>
+After running the Jenkins Job the Screenshot for RabbitMQ, SonarQube, Nexus Artifactory and ArgoCD is as shown in the Screenshot below.
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/14e616b7-7c21-4923-ba49-a654905240b3)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/0088339c-299f-4d97-8119-ced4fe14654b)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/564e6944-1ccf-490e-86df-ff77e0a71c31)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/208d28d6-8d76-4610-86c5-632c8b97ef9c)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/9fb1bcc2-f035-4130-a034-f4c5c49445f0)
 
 
