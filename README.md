@@ -49,7 +49,7 @@ Then restart rabbitmq-server service, then stop rabbitmq application using the c
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/338c63ce-63ed-42c5-951b-2e5c9f50f457)
 <br><br/>
 ```
-Run below command on Node-1 to set the policy for High Availability (HA) in RabbitMQ.
+Run below command on Node-1 to set the policy for High Availability (HA) in RabbitMQ Cluster.
 rabbitmqctl set_policy ha-all "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
 ```
 <br><br/>
