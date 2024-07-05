@@ -50,7 +50,7 @@ Then restart rabbitmq-server service, then stop rabbitmq application using the c
 <br><br/>
 ```
 Run below command on Node-1 to set the policy for High Availability (HA) in RabbitMQ Cluster.
-rabbitmqctl set_policy ha-all "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+rabbitmqctl set_policy ha-all ".*" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
 ```
 <br><br/>
 Finally copy the DNS Name of the Application LoadBalancer of RabbitMQ and create the Record Set in hosted zone of Route 53. Access the URL and you will see the default console for RabbitMQ, you can use the initial username and password as guest and login into the RabbitMQ console.
