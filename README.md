@@ -47,12 +47,80 @@ Then restart rabbitmq-server service, then stop rabbitmq application using the c
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/654159fc-3a68-41a3-8d78-9b7afe58cf31)
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/362306a2-e61b-4e11-9bfa-fc58379c52a1)
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/338c63ce-63ed-42c5-951b-2e5c9f50f457)
-
+<br><br/>
 Finally copy the DNS Name of the Application LoadBalancer of RabbitMQ and create the Record Set in hosted zone of Route 53. Access the URL and you will see the default console for RabbitMQ, you can use the initial username and password as guest and login into the RabbitMQ console.
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/36cc38be-a1ad-4ede-883a-398ae2bc73b5)
 
 On Jenkins Slave node create a file using the file present in Repository https://github.com/singhritesh85/Three-tier-WebApplication.git, at the path Three-tier-WebApplication/src/main/resources/db_backup.sql with the name db.sql and create a database with the name accounts then import it as shown in the screenshot below.
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/64aecad1-b3f4-4fca-a488-7d822217df79)
 ![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/58a93fea-3357-43c1-be57-38746b5e345d)
+<br><br/>
+Configure the Jenkins Slave Node as shown in the screenshot below.
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/d75bb1b4-4958-4d60-9d74-cde617cd25f1)
+Install the SonarQube Scanner, Nexus Artifact Uploader and Pipeline Utility Step as shown in the screenshot below.
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/5d9f4070-a2ab-422f-8541-65c1197eea1f)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/a602dc14-ef29-49fe-90da-50cbbb60c643)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/a2967255-a6dd-483e-a1f7-fe1b6ee93d39)
+<br><br/>
+To install nginx ingress controller and ArgoCD follow the below procedure
+```
+kubectl create ns ingress-nginx
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
+
+After creating it you need to edit the service and provide ssl certificate details and etc. in annotations as written below:- 
+=================================================================
+service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:XXXXXXXX:certificate/XXXXXX-XXXXXXX-XXXXXXX-XXXXXXXX
+service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
+service.beta.kubernetes.io/aws-load-balancer-type: elb
+
+===================================================================
+You need to change the targetPort for https to http in nginx ingress controller service as written below:-
+-------------------------------------------------------------------------------------------------------------------------------
+Before:
+
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+After:
+
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: http
+=================================================================
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+Use the argocd-ingress-rule.yaml file as provided with Repository and create the URL, do the entry for this URL with DNS Name in Record Set of hosted zone of Route53. 
+
+You can get the password of ArgoCD using the command written below-
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+
+Now login into ArgoCD using the username admin and password as obtained above. After Login into ArgoCD change the password.
+
+```
+<br><br/>
+Create the Jenkins Job using the Jenkinsfile as provided in this Repository and update the file **application.properties** present at the path Three-tier-WebApplication/src/main/resources as shown in the screenshot below.
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/4d97eae9-fe92-42aa-a568-b7f99dc0fc3a)
+![image](https://github.com/singhritesh85/DevOps-Project-3tier-Application-Deployment-eks-RabbitMQ-Memcache-MySQL/assets/56765895/a7f17aa3-8d10-474c-9530-d3f6b70e1e11)
+
+
 
 
