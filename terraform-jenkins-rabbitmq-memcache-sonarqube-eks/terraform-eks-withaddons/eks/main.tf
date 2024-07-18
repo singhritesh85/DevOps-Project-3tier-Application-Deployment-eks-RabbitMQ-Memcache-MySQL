@@ -79,7 +79,7 @@ module "eks_cluster" {
 #  count = var.db_instance_count
   identifier = var.identifier
   db_subnet_group_name = var.db_subnet_group_name
-  rds_subnet_group = var.rds_subnet_group
+#  rds_subnet_group = var.rds_subnet_group
 #  read_replica_identifier = var.read_replica_identifier  ###  read_replica_identifier = "${var.read_replica_identifier}-${count.index + 1}"
   allocated_storage = var.allocated_storage
   max_allocated_storage = var.max_allocated_storage
