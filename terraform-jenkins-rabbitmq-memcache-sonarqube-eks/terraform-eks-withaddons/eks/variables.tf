@@ -312,10 +312,10 @@ variable "db_subnet_group_name" {
   description = "Provide the Name for DB Subnet Group"
   type = string
 }
-variable "rds_subnet_group" {
-  description = "Provide the Subnet IDs to create DB Subnet Group"
-  type = list
-}
+#variable "rds_subnet_group" {
+#  description = "Provide the Subnet IDs to create DB Subnet Group"
+#  type = list
+#}
 variable "db_instance_count" {
   description = "Provide the number of DB Instances to be launched"
   type = number
