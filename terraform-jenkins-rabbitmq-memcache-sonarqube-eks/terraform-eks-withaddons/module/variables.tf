@@ -229,9 +229,9 @@ variable "identifier" {
 variable "db_subnet_group_name" {
 
 }
-variable "rds_subnet_group" {
+#variable "rds_subnet_group" {
 
-}
+#}
 #variable "read_replica_identifier" {
 
 #}
